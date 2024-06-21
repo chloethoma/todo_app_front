@@ -1,47 +1,42 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+  import {fade} from 'svelte/transition';
   export let task;
 
+  const dispatch = createEventDispatcher();
+
   let isCompleted;
-  if (task.status !== "notCompleted") isCompleted = true;
+  let visible = true;
   
-  const updateTask = async () => {
-	isCompleted = !isCompleted;
-	let status;
-	isCompleted == true ? status="completed" : status="notCompleted";
+  if (task.status !== "notCompleted") isCompleted = true;
 
-	const data = {
-		"name":task.name,
-		"status":status
-	}
+  const updateStatus = () => {
+    isCompleted = !isCompleted;
+    let status;
+    isCompleted == true ? (status = "completed") : (status = "notCompleted");
 
-    try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/tasks/${task.id}`,
-        {
-          method: "PUT",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+    const data = {
+      name: task.name,
+      status: status,
+    };
 
-      const resultat = await response.json();
-      console.log("reussite", resultat);
-    } catch (error) {
-      console.error("Erreur", error);
-    }
+    dispatch("update", { data: data, id: task.id });
   };
 
+  const deleteTask = () => {
+	visible = false;
+	dispatch("delete", {id:task.id})
+  }
 </script>
 
-<div class="task">
-  <input
-    type="checkbox" bind:checked={isCompleted} on:click={updateTask}/>
-  <div class="taskName" class:isCompleted>{task.name}</div>
-  <button>X</button>
-</div>
+{#if visible}
+<div class="task" out:fade>
+	<input type="checkbox" bind:checked={isCompleted} on:click={updateStatus} />
+	<div class="taskName" class:isCompleted>{task.name}</div>
+	<button class="deleteButton" on:click={deleteTask}>X</button>
+  </div>
+{/if}
+  
 
 <style>
   .task {
