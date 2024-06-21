@@ -3,7 +3,7 @@ import Header from './lib/Header.svelte'
 import TaskList from './lib/TaskList.svelte';
 
 const getTaskList = async () => {
-  const res = await fetch('http://127.0.0.1:8000/api/task');
+  const res = await fetch('http://127.0.0.1:8000/api/tasks');
   const data = await res.json();
   return data;
 }
@@ -14,7 +14,7 @@ const getTaskList = async () => {
 
 {#await getTaskList()}
   <p>Loading...</p>  
-{:then data} 
+{:then data}
   <TaskList {data}/>
 {/await} 
 
