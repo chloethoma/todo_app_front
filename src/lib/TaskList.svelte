@@ -1,9 +1,10 @@
 <script>
-    import Task from './Task.svelte'
-    export let data;
+    import Task from './Task.svelte';
+    import {tasks} from './taskStore';
+
 </script>
 
-{#each data as task}
+{#each $tasks as task (task.id)}
     <Task {task} on:updateStatus on:delete/>
 {/each}
 

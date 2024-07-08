@@ -24,6 +24,7 @@
   .addTask {
     display: grid;
     grid-template-columns: repeat(12, 35px);
+    margin-top:10px;
   }
 
   button {

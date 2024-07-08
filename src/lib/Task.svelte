@@ -1,11 +1,9 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import {fade} from 'svelte/transition';
   export let task;
   
   let name = task.name;
   let isCompleted;
-  let visible = true;
 
   const dispatch = createEventDispatcher();
   
@@ -25,18 +23,15 @@
   };
 
   const deleteTask = () => {
-	visible = false;
 	dispatch("delete", {id:task.id})
   }
 </script>
 
-{#if visible}
-<div class="task" out:fade>
+<div class="task">
 	<input type="checkbox" class="checkbox" bind:checked={isCompleted} on:click={updateStatus} />
 	<input type="text" class="taskName" class:isCompleted bind:value={name}/>
 	<button class="deleteButton" on:click={deleteTask}>X</button>
   </div>
-{/if}
   
 
 <style>
