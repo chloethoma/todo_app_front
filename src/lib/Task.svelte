@@ -2,11 +2,12 @@
   import { createEventDispatcher } from "svelte";
   import {fade} from 'svelte/transition';
   export let task;
-
-  const dispatch = createEventDispatcher();
-
+  
+  let name = task.name;
   let isCompleted;
   let visible = true;
+
+  const dispatch = createEventDispatcher();
   
   if (task.status !== "notCompleted") isCompleted = true;
 
@@ -16,11 +17,11 @@
     isCompleted == true ? (status = "completed") : (status = "notCompleted");
 
     const data = {
-      name: task.name,
+      name: name,
       status: status,
     };
 
-    dispatch("update", { data: data, id: task.id });
+    dispatch("updateStatus", { data: data, id: task.id });
   };
 
   const deleteTask = () => {
@@ -31,8 +32,8 @@
 
 {#if visible}
 <div class="task" out:fade>
-	<input type="checkbox" bind:checked={isCompleted} on:click={updateStatus} />
-	<div class="taskName" class:isCompleted>{task.name}</div>
+	<input type="checkbox" class="checkbox" bind:checked={isCompleted} on:click={updateStatus} />
+	<input type="text" class="taskName" class:isCompleted bind:value={name}/>
 	<button class="deleteButton" on:click={deleteTask}>X</button>
   </div>
 {/if}
@@ -41,10 +42,10 @@
 <style>
   .task {
     display: grid;
-    grid-template-columns: repeat(10, minmax(min-content, 30px));
+    grid-template-columns: repeat(12, 35px);
   }
 
-  input {
+  .checkbox {
     grid-column: 1/2;
   }
 
@@ -53,10 +54,15 @@
   }
 
   .taskName {
-    grid-column: 2/10;
+    grid-column: 2/12;
+    font-size: 14px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    margin-left:10px;
   }
 
-  button {
-    grid-column: 10;
+
+  .deleteButton {
+    grid-column: 12;
   }
 </style>

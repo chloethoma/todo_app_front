@@ -15,7 +15,7 @@
     }
 
     .img{
-        width:300px;
+        width:400px;
         height:auto;
         opacity:0.7;
     }

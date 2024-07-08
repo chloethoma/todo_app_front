@@ -4,6 +4,6 @@
 </script>
 
 {#each data as task}
-    <Task {task} on:update on:delete/>
+    <Task {task} on:updateStatus on:delete/>
 {/each}
 

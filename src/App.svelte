@@ -1,6 +1,7 @@
 <script>
   import Header from "./lib/Header.svelte";
   import TaskList from "./lib/TaskList.svelte";
+  import AddTask from "./lib/AddTask.svelte";
 
   const getTaskList = async () => {
     const res = await fetch("http://127.0.0.1:8000/api/tasks");
@@ -8,16 +9,28 @@
     return data;
   };
 
+  const addNewTask = async (event) => {
+    try {
+      await fetch(
+        `http://127.0.0.1:8000/api/tasks`,
+        {
+          method: "POST",
+          body:JSON.stringify(event.detail.data)
+        }
+      );
+
+    } catch (error) {
+      console.error("Erreur sur la fonction postTask", error);
+    }
+
+  }
+
   const updateTask = async (event) => {
     try {
       await fetch(
         `http://127.0.0.1:8000/api/tasks/${event.detail.id}`,
         {
           method: "PUT",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify(event.detail.data),
         }
       );
@@ -33,10 +46,6 @@
         `http://127.0.0.1:8000/api/tasks/${event.detail.id}`,
         {
           method: "DELETE",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
         }
       );
 
@@ -44,12 +53,15 @@
       console.error("Erreur sur la fonction deleteTask", error);
     }
   };
+
 </script>
 
-<Header />
+<Header/>
 
 {#await getTaskList()}
   <p>Loading...</p>
 {:then data}
-  <TaskList {data} on:update={updateTask} on:delete={deleteTask} />
+  <TaskList {data} on:updateStatus={updateTask} on:delete={deleteTask}/>
 {/await}
+
+<AddTask on:newTask={addNewTask}/>
