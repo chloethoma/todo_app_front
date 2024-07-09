@@ -1,26 +1,30 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import Icon from '@iconify/svelte'
   export let task;
   
-  let name = task.name;
-  let isCompleted;
-
   const dispatch = createEventDispatcher();
+  let isCompleted;
+  // let name = task.name;
   
   if (task.status !== "notCompleted") isCompleted = true;
-
+  
   const updateStatus = () => {
-    isCompleted = !isCompleted;
     let status;
+    isCompleted = !isCompleted;
     isCompleted == true ? (status = "completed") : (status = "notCompleted");
 
     const data = {
-      name: name,
+      name: task.name,
       status: status,
     };
 
     dispatch("updateStatus", { data: data, id: task.id });
   };
+
+  const updateTaskName = () => {
+    dispatch("updateTaskName", {})
+  }
 
   const deleteTask = () => {
 	dispatch("delete", {id:task.id})
@@ -29,8 +33,9 @@
 
 <div class="task">
 	<input type="checkbox" class="checkbox" bind:checked={isCompleted} on:click={updateStatus} />
-	<input type="text" class="taskName" class:isCompleted bind:value={name}/>
-	<button class="deleteButton" on:click={deleteTask}>X</button>
+	<p class="taskName" class:isCompleted>{task.name}</p>
+  <button class="updateButton" on:click={updateTaskName}><Icon icon="ph:pencil-bold" width="16" height="16" style="color: #9a9996" /></button>
+	<button class="deleteButton" on:click={deleteTask}><Icon icon="raphael:cross" width="20" height="20" style="color: #9a9996" /></button>
   </div>
   
 
@@ -49,15 +54,22 @@
   }
 
   .taskName {
-    grid-column: 2/12;
+    grid-column: 2/11;
     font-size: 14px;
     overflow-x: hidden;
     white-space: nowrap;
     margin-left:10px;
   }
 
+  .updateButton {
+    grid-column:11;
+    margin:0;
+    padding:0;
+  }
 
   .deleteButton {
     grid-column: 12;
+    margin:0;
+    padding:0;
   }
 </style>

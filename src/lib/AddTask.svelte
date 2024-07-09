@@ -1,45 +1,36 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  let newTask = "";
+  import Icon from '@iconify/svelte'
 
   const dispatch = createEventDispatcher();
 
-  const addNewTask = () => {
+  const addNewTask = (input) => {
     const data = {
-      name: newTask,
+      name: input.value,
       status: "notCompleted",
     };
 
     dispatch("newTask", { data:data });
-    newTask = "";
+    input.value = "";
   };
 </script>
 
 <div class="addTask">
-  <button on:click={addNewTask}>+</button>
-  <input bind:value={newTask} placeholder="Add to-do" />
+  <input on:keydown={(event) => event.key === 'Enter' && addNewTask(event.target)} placeholder="Add to-do and press Enter" />
 </div>
 
 <style>
   .addTask {
     display: grid;
-    grid-template-columns: repeat(12, 35px);
+    grid-template-columns: 1fr;
     margin-top:10px;
   }
 
-  button {
-    grid-column: 1;
-    border:solid 1px grey;
-    padding:0;
-    margin:0;
+  input {
+    font-size:14px;
+    height:30px;
   }
 
-  input {
-    grid-column: 2/13;
-    padding-top:10px;
-    padding-bottom: 10px;
-    margin-left: 10px
-  }
 </style>
 
 

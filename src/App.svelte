@@ -20,12 +20,9 @@
         }
       );
       tasks.update(allTasks => [...allTasks, newTask]);
-
     } catch (error) {
       console.error("Erreur sur la fonction postTask", error);
     }
-
-
   }
 
   const updateTask = async (event) => {
@@ -53,9 +50,7 @@
           method: "DELETE",
         }
       );
-
       tasks.update((allTasks) => allTasks.filter((task) => task.id !== deleteTaskId))
-
     } catch (error) {
       console.error("Erreur sur la fonction deleteTask", error);
     }
