@@ -5,8 +5,8 @@
   
   const dispatch = createEventDispatcher();
   let isCompleted;
-  let updateInput = false;
   let status;
+  let updateInput = false;
   
   if (task.status !== 'notCompleted') isCompleted = true;
   
@@ -59,25 +59,25 @@
   .task {
     display: grid;
     grid-template-columns: repeat(12, 35px);
-    grid-template-rows: 40px;
+    grid-template-rows: minmax(40px auto);
     align-items:center;
   }
 
   .checkbox {
     grid-column: 1/2;
   }
-
-  .taskName.isCompleted {
-    text-decoration-line: line-through;
-  }
-
+  
   .taskName {
     grid-column: 2/11;
     font-size: 14px;
-    overflow-x: hidden;
-    white-space: nowrap;
+    /* overflow-x: hidden;
+    white-space: nowrap; */
     margin-left:10px;
-  }
+    }
+    
+    .taskName.isCompleted {
+      text-decoration-line: line-through;
+    }
 
   .taskNameInput {
     grid-column:2/13;
@@ -85,15 +85,16 @@
     margin-left:10px;
   }
 
-  .updateButton {
-    grid-column:11;
+  button {
     margin:0;
     padding:0;
   }
 
+  .updateButton {
+    grid-column:11;
+  }
+
   .deleteButton {
     grid-column: 12;
-    margin:0;
-    padding:0;
   }
 </style>
