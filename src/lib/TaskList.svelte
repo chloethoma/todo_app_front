@@ -5,6 +5,6 @@
 </script>
 
 {#each $tasks as task (task.id)}
-    <Task {task} on:updateStatus on:delete/>
+    <Task {task} on:updateStatus on:updateTaskName on:delete/>
 {/each}
 

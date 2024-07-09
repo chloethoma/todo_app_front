@@ -1,11 +1,11 @@
 <script>
-    const date = new Date().toLocaleDateString("fr-FR");
-    const src = "https://t3.ftcdn.net/jpg/02/59/31/70/360_F_259317013_nJJaBgGGzvXMd6cAyLd6yMJtbdnd61wk.jpg";
+    const date = new Date().toLocaleDateString('fr-FR');
+    const src = 'https://t3.ftcdn.net/jpg/02/59/31/70/360_F_259317013_nJJaBgGGzvXMd6cAyLd6yMJtbdnd61wk.jpg';
 </script>
 
-<div class="header">
-    <img {src} alt="background_img" class="img"/>
-    <div class="date">{date}</div>
+<div class='header'>
+    <img {src} alt='background_img' class='img'/>
+    <div class='date'>{date}</div>
 </div>
 
 <style>

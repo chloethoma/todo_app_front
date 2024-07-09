@@ -1,22 +1,21 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  import Icon from '@iconify/svelte'
+  import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
 
   const addNewTask = (input) => {
     const data = {
       name: input.value,
-      status: "notCompleted",
+      status: 'notCompleted',
     };
 
-    dispatch("newTask", { data:data });
-    input.value = "";
+    dispatch('newTask', { data:data });
+    input.value = '';
   };
 </script>
 
-<div class="addTask">
-  <input on:keydown={(event) => event.key === 'Enter' && addNewTask(event.target)} placeholder="Add to-do and press Enter" />
+<div class='addTask'>
+  <input on:keydown={(event) => event.key === 'Enter' && addNewTask(event.target)} placeholder='Add to-do and press Enter' />
 </div>
 
 <style>
